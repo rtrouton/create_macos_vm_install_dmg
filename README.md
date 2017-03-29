@@ -1,4 +1,4 @@
-This script prepares OS X or macOS installer disk images for use with VMware Fusion and ESXi. It's adapted from the prepare_iso script created by Tim Sutton: [https://github.com/timsutton/osx-vm-templates/tree/master/prepare_iso](https://github.com/timsutton/osx-vm-templates/tree/master/prepare_iso)
+This script prepares OS X or macOS installer disk images for use with VMware Fusion and ESXi. It's adapted from the **prepare_iso** script created by Tim Sutton: [https://github.com/timsutton/osx-vm-templates/tree/master/prepare_iso](https://github.com/timsutton/osx-vm-templates/tree/master/prepare_iso)
 
 **Pre-requisites**
 
