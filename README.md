@@ -38,7 +38,7 @@ What the script does:
 
 Once you have the customized DMG file created, you can choose it as an install disk image in VMware Fusion when creating virtual machines in VMware Fusion.
 
-This script has been tested with the followinng OS installers from the Mac App Store:
+This script has been tested with the following OS installers from the Mac App Store:
 
 * Mac OS X 10.7.5
 * OS X 10.8.5
