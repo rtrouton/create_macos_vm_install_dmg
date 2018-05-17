@@ -69,6 +69,7 @@ fi
 if [ -d "$ESD" ]; then
 	# we might be an install .app
 	if [ -e "$ESD/Contents/SharedSupport/InstallESD.dmg" ]; then
+		BASE_SYSTEM_DMG="$ESD/Contents/SharedSupport/BaseSystem.dmg"
 		ESD="$ESD/Contents/SharedSupport/InstallESD.dmg"
 	else
 		msg_error "Can't locate an InstallESD.dmg in this source location $ESD!"
@@ -118,6 +119,7 @@ if [ $? -ne 0 ]; then
 fi
 
 msg_status "Mounting BaseSystem.."
+cp "$BASE_SYSTEM_DMG" $MNT_ESD
  BASE_SYSTEM_DMG="$MNT_ESD/BaseSystem.dmg"
  MNT_BASE_SYSTEM=$(/usr/bin/mktemp -d /tmp/vmware-apple-basesystem.XXXX)
  [ ! -e "$BASE_SYSTEM_DMG" ] && msg_error "Could not find BaseSystem.dmg in $MNT_ESD"
