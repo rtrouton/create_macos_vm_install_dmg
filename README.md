@@ -1,9 +1,51 @@
-This script prepares OS X or macOS installer disk images for use with VMware Fusion and ESXi. It's adapted from the **prepare_iso** script created by Tim Sutton: [https://github.com/timsutton/osx-vm-templates/tree/master/prepare_iso](https://github.com/timsutton/osx-vm-templates/tree/master/prepare_iso)
+This script prepares macOS installer disk images for use with virtualization software like VMware Fusion or Parallels. 
 
 **Pre-requisites**
 
 1. This script
-2. An installer from Apple's Mac App Store for one of the following versions of Mac OS X, OS X or macOS:
+2. An installer from Apple's Mac App Store for one of the following versions of macOS:
+
+* 10.12.x
+* 10.13.x
+* 10.14.x
+
+
+**Running the script**
+
+Run the `create_macos_vm_install_dmg.sh` script with two arguments: the path to an "Install macOS.app" and an output directory. 
+
+
+Example usage: 
+
+If you have a macOS Mojave 10.14.x installer available, run this command:
+
+`sudo /path/to/create_macos_vm_install_dmg.sh "/Applications/Install macOS Mojave.app" /path/to/output_directory`
+
+This should produce a disk image file at the specified output directory named something similar to  `macOS_[OS Version Number Here]_installer.dmg`.
+
+
+What the script does:
+
+1. Creates an empty read-write disk image file.
+
+2. Uses the macOS installer's `createinstallmedia` tool to erase the disk image, copy the installer files and set up the disk image to be bootable.
+
+3. If desired, a second disk image in `.iso` format can be generated. This should produce a disk image file at the specified output directory named something similar to  `macOS_[OS Version Number Here]_installer.iso`.
+
+Once you have the disk image file created, you can choose it as an install disk image in VMware Fusion or Parallels when creating macOS virtual machines.
+
+This script has been tested with the following OS installers from the Mac App Store:
+
+* macOS 10.12.6
+* macOS 10.13.6
+* macOS 10.14.3
+
+
+
+
+NOTES: 
+
+An earlier script for preparing disk images for macOS virtual machines is available in the `previous_version` directory. This script supports building installers for the following versions of Mac OS X, OS X and macOS:
 
 * 10.7.x
 * 10.8.x
@@ -11,50 +53,3 @@ This script prepares OS X or macOS installer disk images for use with VMware Fus
 * 10.10.x
 * 10.11.x
 * 10.12.x
-
-
-**Running the script**
-
-Run the `create_macos_vm_install_dmg.sh` script with two arguments: the path to an "Install macOS.app" or the InstallESD.dmg contained within, and an output directory. 
-
-
-Example usage: 
-
-If you have a 10.12.x Sierra installer available, run this command:
-
-`sudo /path/to/create_macos_vm_install_dmg.sh "/Applications/Install macOS Sierra.app" /path/to/output_directory`
-
-This should produce a DMG file at the specified output directory named something similar to  `macOS_InstallESD_10.12.4_16E195_20170329111134.dmg`. An MD5 checksum is printed at the end of the process.
-
-
-What the script does:
-
-1. Mounts the InstallESD.dmg using a shadow file, so the original DMG is left unchanged.
-
-2. Creates `minstallconfig.xml` and `OSInstall.collection` files and moves them into the proper place, for later references by the installer environment's `rc.` files that first load with the system. This allows us to never actually modify the BaseSystem.dmg and only drop in these extra files.
-
-3. If desired, a second disk image in `.iso` format can be generated for use with VMware ESXi servers running on Apple hardware. 
-
-
-Once you have the customized DMG file created, you can choose it as an install disk image in VMware Fusion when creating virtual machines in VMware Fusion.
-
-This script has been tested with the following OS installers from the Mac App Store:
-
-* Mac OS X 10.7.5
-* OS X 10.8.5
-* OS X 10.9.5
-* OS X 10.10.5
-* OS X 10.11.6
-* macOS 10.12.4
-
-
-
-
-NOTES: 
-
-The OS X 10.9.x disk images created with this method will not install a recovery partition into a VM. As a workaround, it appears that this can be addressed via using Per Olofsson’s **Create Recovery Partition Installer** app to generate an installer that can install the missing recovery partition.
-
-**Create Recovery Partition Installer** is available from here on GitHub:
-[https://github.com/MagerValp/Create-Recovery-Partition-Installer](https://github.com/MagerValp/Create-Recovery-Partition-Installer)
-
-In my testing, 10.7.x, 10.8.x, 10.10.x, 10.11.x and 10.12.x disk images will successfully install a recovery partition into the VM.
