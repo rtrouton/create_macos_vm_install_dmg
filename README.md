@@ -43,7 +43,7 @@ This script has been tested with the following OS installers from the Mac App St
 
 
 
-NOTES: 
+**NOTE**: 
 
 An earlier script for preparing disk images for macOS virtual machines is available in the `previous_version` directory. This script supports building installers for the following versions of Mac OS X, OS X and macOS:
 
