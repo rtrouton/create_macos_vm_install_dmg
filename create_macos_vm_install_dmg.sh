@@ -97,7 +97,7 @@ random_disk_image_name=$(uuidgen)
 installer_mounted_volume=$(echo "$install_esd" | grep -o 'Install.*' | sed 's/....$//')
 
 if [[ "$installer_qualifies" -lt 1012 ]]; then
-    msg_error "This script supports building .iso disk image files for macOS 10.12.0 and later."
+    msg_error "This script supports building installer disk image files for macOS 10.12.0 and later."
     msg_error "Please use an installer app which installs macOS 10.12.0 or later."
     usage
 	exit 1
@@ -167,7 +167,7 @@ if [[ "$ISO" == 1 ]]; then
 fi
 
 
-# Display a message that the build process has finished and include the location of the .iso disk image file.
+# Display a message that the build process has finished and include the location of the disk image file.
 
 msg_status "Building process complete."
 
