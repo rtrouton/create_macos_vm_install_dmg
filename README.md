@@ -39,7 +39,8 @@ This script has been tested with the following OS installers from the Mac App St
 
 * macOS 10.12.6
 * macOS 10.13.6
-* macOS 10.14.3
+* macOS 10.14.6
+* macOS 10.15.1
 
 
 
