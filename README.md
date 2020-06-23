@@ -9,6 +9,7 @@ This script prepares macOS installer disk images for use with virtualization sof
 * 10.13.x
 * 10.14.x
 * 10.15.x
+* 11.0 beta 1
 
 
 **Running the script**
@@ -35,12 +36,13 @@ What the script does:
 
 Once you have the disk image file created, you can choose it as an install disk image in VMware Fusion or Parallels when creating macOS virtual machines.
 
-This script has been tested with the following OS installers from the Mac App Store:
+This script has been tested with the following OS installers:
 
 * macOS 10.12.6
 * macOS 10.13.6
 * macOS 10.14.6
-* macOS 10.15.1
+* macOS 10.15.5
+* macOS 11.0 beta 1
 
 
 
