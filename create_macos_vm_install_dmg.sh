@@ -82,15 +82,26 @@ fi
 install_esd=${install_esd%%/}
 output_directory=${output_directory%%/}
 
+macOS11=0
+
 if [[ -d "$install_esd" ]] && [[ -e "$install_esd/Contents/SharedSupport/InstallESD.dmg" ]]; then
    msg_status "macOS Installer application detected at the following path: $install_esd"
+elif [[ -d "$install_esd" ]] && [[ ! -e "$install_esd/Contents/SharedSupport/InstallESD.dmg" ]] && [[ -e "$install_esd/Contents/SharedSupport/SharedSupport.dmg" ]]; then
+   msg_status "macOS Installer application detected at the following path: $install_esd"
+   macOS11=1
 else
    msg_error "macOS Installer application not detected."
    usage
    exit 1
 fi
 
-installer_version=$(/usr/libexec/PlistBuddy -c 'Print :System\ Image\ Info:version' "$install_esd/Contents/SharedSupport/InstallInfo.plist")
+if [[ "$macOS11" = 1 ]]; then
+    hdiutil attach "$install_esd/Contents/SharedSupport/SharedSupport.dmg" -quiet -noverify -mountpoint "/Volumes/Shared Support"
+    installer_version=$(/usr/libexec/PlistBuddy -c 'Print :Assets:0:OSVersion' "/Volumes/Shared Support/com_apple_MobileAsset_MacSoftwareUpdate/com_apple_MobileAsset_MacSoftwareUpdate.xml")
+    hdiutil detach "/Volumes/Shared Support"* -force -quiet   
+else
+    installer_version=$(/usr/libexec/PlistBuddy -c 'Print :System\ Image\ Info:version' "$install_esd/Contents/SharedSupport/InstallInfo.plist")
+fi
 installer_version_digits_only=$(echo $installer_version | awk -F'[^0-9]*' '$0=$1$2$3')
 installer_qualifies=$(echo $installer_version_digits_only | head -c4)
 random_disk_image_name=$(uuidgen)
@@ -113,11 +124,16 @@ else
    exit 1
 fi
 
-# Creating a temporary disk image of 8 GB space in /tmp/ and mounting it. 
+# Creating a temporary disk image in /tmp/ and mounting it. 
 # For maximum compatibility, the file system on the disk image is set to use
 # Journaled HFS+.
 
-disk_image_size=8
+if [[ "$macOS11" = 1 ]]; then
+    disk_image_size=10
+else
+    disk_image_size=8
+fi
+
 disk_image_filesystem="HFS+J"
 
 msg_status "Creating empty $disk_image_size GB disk image at the following location: /tmp/$random_disk_image_name.cdr"
@@ -142,13 +158,24 @@ else
    sudo "$install_esd/Contents/Resources/createinstallmedia" --volume /Volumes/"$random_disk_image_name" --nointeraction
 fi
 
+
+
 # Move and rename the installer disk image to match the following standard:
 #
 # macOS_[OS Version Number Here]_installer
 
 mv /tmp/"$random_disk_image_name".cdr.dmg "$output_directory"/macOS_"$installer_version_digits_only"_installer.dmg
+
+
+# Clean up mounted drives
+
 msg_status "Unmounting macOS installer disk image."
-hdiutil detach "/Volumes/$installer_mounted_volume"
+
+hdiutil detach "/Volumes/$installer_mounted_volume"* -force -quiet
+
+if [[ -e "/Volumes/Shared Support" ]]; then
+   sudo hdiutil detach "/Volumes/Shared Support" -force -quiet
+fi
 
 output_dmg="$output_directory"/macOS_"$installer_version_digits_only"_installer.dmg
 
@@ -165,7 +192,6 @@ if [[ "$ISO" == 1 ]]; then
     mv "$output_directory"/macOS_"$installer_version_digits_only"_installer.iso.cdr "$output_directory"/macOS_"$installer_version_digits_only"_installer.iso
     output_iso="$output_directory"/macOS_"$installer_version_digits_only"_installer.iso
 fi
-
 
 # Display a message that the build process has finished and include the location of the disk image file.
 
