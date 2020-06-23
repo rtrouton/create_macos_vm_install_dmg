@@ -3,7 +3,7 @@ This script prepares macOS installer disk images for use with virtualization sof
 **Pre-requisites**
 
 1. This script
-2. An installer from Apple's Mac App Store for one of the following versions of macOS:
+2. An installer for one of the following versions of macOS:
 
 * 10.12.x
 * 10.13.x
