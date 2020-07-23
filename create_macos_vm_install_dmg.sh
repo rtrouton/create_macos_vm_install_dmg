@@ -102,7 +102,7 @@ if [[ "$macOS11" = 1 ]]; then
 else
     installer_version=$(/usr/libexec/PlistBuddy -c 'Print :System\ Image\ Info:version' "$install_esd/Contents/SharedSupport/InstallInfo.plist")
 fi
-installer_version_digits_only=$(echo $installer_version | awk -F'[^0-9]*' '$0=$1$2$3')
+installer_version_digits_only=$(echo $installer_version | awk -F'[^0-9]*' '$0=$1$2$3' | sed 's/^[0-9]\{3\}$/&0/')
 installer_qualifies=$(echo $installer_version_digits_only | head -c4)
 random_disk_image_name=$(uuidgen)
 installer_mounted_volume=$(echo "$install_esd" | grep -o 'Install.*' | sed 's/....$//')
@@ -129,7 +129,7 @@ fi
 # Journaled HFS+.
 
 if [[ "$macOS11" = 1 ]]; then
-    disk_image_size=10
+    disk_image_size=15
 else
     disk_image_size=8
 fi
