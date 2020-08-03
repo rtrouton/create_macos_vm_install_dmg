@@ -42,7 +42,7 @@ This script has been tested with the following OS installers:
 * macOS 10.13.6
 * macOS 10.14.6
 * macOS 10.15.5
-* macOS 11.0 beta 1
+* macOS 11.0 beta 3
 
 
 
