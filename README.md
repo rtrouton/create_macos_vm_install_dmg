@@ -43,7 +43,8 @@ This script has been tested with the following OS installers:
 * macOS 10.13.6
 * macOS 10.14.6
 * macOS 10.15.5
-* macOS 11.1
+* macOS 11.6.2
+* macOS 12.1
 
 
 
