@@ -11,6 +11,7 @@ This script prepares macOS installer disk images for use with virtualization sof
 * 10.15.x
 * 11.x
 * 12.x
+* 13.x
 
 
 **Running the script**
@@ -42,9 +43,10 @@ This script has been tested with the following OS installers:
 * macOS 10.12.6
 * macOS 10.13.6
 * macOS 10.14.6
-* macOS 10.15.5
-* macOS 11.6.2
-* macOS 12.1
+* macOS 10.15.7
+* macOS 11.7.1
+* macOS 12.6.1
+* macOS 13.0.1
 
 
 
