@@ -44,9 +44,9 @@ This script has been tested with the following OS installers:
 * macOS 10.13.6
 * macOS 10.14.6
 * macOS 10.15.7
-* macOS 11.7.1
-* macOS 12.6.1
-* macOS 13.0.1
+* macOS 11.7.6
+* macOS 12.6.5
+* macOS 13.3.1
 
 
 
