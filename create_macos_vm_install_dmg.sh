@@ -129,7 +129,7 @@ fi
 # Journaled HFS+.
 
 if [[ "$macOS11" = 1 ]]; then
-    disk_image_size=15
+    disk_image_size=20
 else
     disk_image_size=8
 fi
